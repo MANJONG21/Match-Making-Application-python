@@ -25,8 +25,33 @@ class LoginScreen(QMainWindow):
     ##          FUNCTION THAT CHECKS IF THE USER INFO IS FOUND IN THE DATABASE        ##
     ####################################################################################
 
-    def checkInfoinDatabase(self, username, password):
-        pass
+    #17 Function that checks if the user info is found in the database
+def checkInfoinDatabase(self, username, password):
+try:
+# Step 1: Connect to the usersInfo database
+self.conn = sqlite3.connect(&quot;usersInfo.db&quot;)
+self.cursor = self.conn.cursor()
+
+# Step 2: Execute a SQL query to select user information based on the provided username and
+password
+self.cursor.execute(&#39;&#39;&#39;
+SELECT Username, Email, Password, PhoneNumber, Age, Location, Gender FROM Users
+WHERE Username = ? AND Password = ?
+&#39;&#39;&#39;, (username, password))
+
+# Step 3: Fetch the result of the query
+result = self.cursor.fetchone()
+
+# Step 4: Close the database connection
+self.conn.close()
+
+# Step 5: Return the result (user information)
+return result
+
+except Exception as e:
+# Step 6: Handle any exceptions that might occur during the process
+print(f&quot;Error in checkInfoinDatabase method: {str(e)}&quot;)
+return None # Return None in case of an error
     
 
     #####################################################################################
@@ -60,3 +85,6 @@ class LoginScreen(QMainWindow):
 
     def Login(self):
         pass
+
+
+
